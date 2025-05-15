@@ -1,0 +1,18 @@
+version: "2"
+
+sql:
+  - engine: "postgresql"
+    # Glob pattern – tất cả các file .sql trong thư mục migration
+    schema:
+      - "db/migration/*.sql"
+    # Glob pattern – tất cả các file .sql trong thư mục query
+    queries:
+      - "db/query/*.sql"
+    gen:
+      go: 
+        package: "db"       # tên Go package trong code sinh ra
+        out: "db/sqlc/"           # thư mục đích (relative) chứa code
+        emit_json_tags: true # sinh ra json tags cho các trường trong struct
+        emit_prepared_queries: true # sinh ra prepared queries
+        emit_interface: false # sinh ra interface cho các struct
+        emit_exact_table_names: false # sinh ra tên struct giống với tên bảng trong DB
