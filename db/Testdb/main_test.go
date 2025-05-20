@@ -6,29 +6,32 @@ import (
 	"os"
 	"testing"
 
-	"github.com/dongnguyen24/sqlc-demo/db/sqlc"
+	db "github.com/dongnguyen248/simple_bank/db/sqlc"
+	_ "github.com/lib/pq"
 )
 
 const (
 	dbDriver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
+	dbSource = "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable"
 )
 
-var testQueries *sqlc.Queries
+var testQueries *db.Queries
+var testDB *sql.DB
 
 func TestMain(m *testing.M) {
 	// create a connection to the database
-	conn, err := sql.Open(dbDriver, dbSource)
+	var err error
+	testDB, err = sql.Open(dbDriver, dbSource)
 	if err != nil {
 		log.Fatal("cannot connect to db:", err)
 	}
-	testQueries = New(conn)
+	testQueries = db.New(testDB)
 
 	// run the tests
 	code := m.Run()
 
 	// close the database connection
-	if err := conn.Close(); err != nil {
+	if err := testDB.Close(); err != nil {
 		log.Fatal("cannot close db:", err)
 	}
 
