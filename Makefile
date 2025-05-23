@@ -12,6 +12,10 @@ sqlc:
 	sqlc generate
 test:
 	go test -v -cover ./...
+server:
+	go run main.go
+mock:
+	mockgen -package mockdb -destination db/mock/store.go github.com/dongnguyen248/simple_bank/db/sqlc Store
 # The following targets are used to manage the database and run migrations.
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server mock
 # This Makefile is used to create and drop the database for the simple_bank application.

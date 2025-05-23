@@ -14,5 +14,6 @@ sql:
         out: "db/sqlc/"           # thư mục đích (relative) chứa code
         emit_json_tags: true # sinh ra json tags cho các trường trong struct
         emit_prepared_queries: true # sinh ra prepared queries
-        emit_interface: false # sinh ra interface cho các struct
+        emit_interface: true # sinh ra interface cho các struct
         emit_exact_table_names: false # sinh ra tên struct giống với tên bảng trong DB
+        emit_empty_slices: true # sinh ra slice rỗng cho các trường không có dữ liệu
