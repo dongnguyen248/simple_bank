@@ -9,7 +9,6 @@ import (
 
 	"encoding/json"
 
-	"github.com/dongnguyen248/simple_bank/api"
 	mockdb "github.com/dongnguyen248/simple_bank/db/mock"
 	db "github.com/dongnguyen248/simple_bank/db/sqlc"
 	"github.com/dongnguyen248/simple_bank/util"
@@ -87,7 +86,7 @@ func TestGetAccountAPI(t *testing.T) {
 			tc.buildStubs(store)
 
 			// Create a new server with the mock store
-			server := api.NewServer(store)
+			server := NewTestServer(t, store)
 			recorder := httptest.NewRecorder()
 			url := fmt.Sprintf("/accounts/%d", tc.accountID)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
